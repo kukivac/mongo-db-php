@@ -6,16 +6,34 @@ namespace App\Controllers;
 
 class PokemonController extends AbstractController
 {
-    public function index(): string
+    /**
+     * @param array $query_params
+     * @return string
+     */
+    public function index(array $query_params = []): string
     {
-        return "Welcome to the Pokémon API!";
+        $data = [
+            'title' => 'Pokémon List',
+            'message'=>'hello world'
+        ];
+
+        return $this->render('index', $data);
     }
 
-    public function list(): string
+    /**
+     * @param array $query_params
+     * @return string
+     */
+    public function list(array $query_params = []): string
     {
-        $collection = $this->mongo_client->pokedex->pokemon;
+        $collection = $this->mongo_client->pokedex->pokemons;
         $pokemons = $collection->find()->toArray();
 
-        return json_encode($pokemons, JSON_PRETTY_PRINT);
+        $data = [
+            'title' => 'Pokémon List',
+            'pokemons' => json_decode(json_encode($pokemons),true),
+        ];
+
+        return $this->render('list', $data);
     }
 }

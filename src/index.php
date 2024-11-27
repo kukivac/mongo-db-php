@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Helpers\Router;
 use Dotenv\Dotenv;
-use App\Router;
 use MongoDB\Client;
 
 require 'vendor/autoload.php'; // Include Composer's autoloader
@@ -31,7 +31,7 @@ if (APP_ENV === 'local') {
     error_reporting(0);
 }
 
-set_error_handler(function ($severity, $message, $file, $line): void{
+set_error_handler(function ($severity, $message, $file, $line): void {
     if (!(error_reporting() & $severity)) {
         // Ignore errors not included in error_reporting
         return;
@@ -69,7 +69,14 @@ register_shutdown_function(function () {
 });
 
 // Initialize MongoDB client
-$connection_string = "mongodb://" . DB_USERNAME . ":" . DB_PASSWORD . "@" . DB_HOST . ":" . DB_PORT . "/" . DB_DATABASE;
+$connection_string = sprintf(
+    "mongodb://%s:%s@%s:%s/%s?authSource=admin",
+    DB_USERNAME,
+    DB_PASSWORD,
+    DB_HOST,
+    DB_PORT,
+    DB_DATABASE
+);
 $mongo_client = new Client($connection_string);
 // Handle the request via Router
 $router = new Router($mongo_client);
