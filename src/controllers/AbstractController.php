@@ -10,6 +10,7 @@ use App\Helpers\View;
 abstract class AbstractController
 {
     protected Client $mongo_client;
+    protected array $query_params = [];
     protected View $view;
 
     public function __construct(Client $mongo_client)
@@ -18,14 +19,18 @@ abstract class AbstractController
         $this->view = new View();
     }
 
+    public function setQueryParams(array $query_params): void
+    {
+        $this->query_params = $query_params;
+    }
+
+    protected function getQueryParams(): array
+    {
+        return $this->query_params;
+    }
+
     protected function render(string $view, array $data = []): string
     {
-        // Determine the controller name dynamically
-        $controller_name = strtolower(str_replace('Controller', '', (new \ReflectionClass($this))->getShortName()));
-
-        // Construct the view path
-        $view_path = "{$controller_name}/{$view}";
-
-        return $this->view->render($view_path, $data);
+        return $this->view->render($view, $data);
     }
 }

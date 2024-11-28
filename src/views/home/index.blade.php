@@ -7,6 +7,6 @@
 </head>
 <body>
 <h1>{{ $message }}</h1>
-<a href="/pokemon/list">Pokemons</a>
+<a href="/pokemons/list">Pokemons</a>
 </body>
 </html>

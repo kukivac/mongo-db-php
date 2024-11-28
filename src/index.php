@@ -78,6 +78,12 @@ $connection_string = sprintf(
     DB_DATABASE
 );
 $mongo_client = new Client($connection_string);
-// Handle the request via Router
+
 $router = new Router($mongo_client);
+
+$router->addRoute('', 'HomeController', 'index');
+$router->addRoute('pokemons', 'PokemonController', 'list');
+$router->addRoute('pokemons/list', 'PokemonController', 'list');
+$router->addRoute('pokemons/{id}', 'PokemonController', 'details');
+
 echo $router->handle($_SERVER['REQUEST_URI']);

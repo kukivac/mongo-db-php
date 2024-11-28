@@ -13,6 +13,6 @@ class HomeController extends AbstractController
             'message' => 'Explore the world of Pokémon.',
         ];
 
-        return $this->render('index', $data);
+        return $this->render('home.index', $data);
     }
 }

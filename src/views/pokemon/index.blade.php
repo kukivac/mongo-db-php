@@ -6,6 +6,7 @@
     <title>{{ $title }}</title>
 </head>
 <body>
-<h1>{{ $message }}</h1>
+<h1>Pokémon Index</h1>
+<p>Query Parameters: {{ json_encode($query) }}</p>
 </body>
 </html>
