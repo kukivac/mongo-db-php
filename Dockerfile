@@ -1,9 +1,9 @@
 FROM composer:lts as deps
 
-WORKDIR /app
+WORKDIR /src
 
-COPY composer.json /app/composer.json
-RUN if [ -f composer.lock ]; then cp composer.lock /app/composer.lock; fi
+COPY composer.json /src/composer.json
+RUN if [ -f composer.lock ]; then cp composer.lock /src/composer.lock; fi
 
 RUN --mount=type=cache,target=/tmp/cache \
     composer install --no-dev --no-interaction
